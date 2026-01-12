@@ -1,0 +1,49 @@
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# If you are using environment variables #
+.env
+.env.*
+
+# Virtualenv #
+venv/
+ENV/
+env/
+
+# IDEs #
+.idea/
+.vscode/
+
+# OS generated #
+.DS_Store
+Thumbs.db
+
+# Python #
+*.py[cod]
+*$py.class
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Migrations (optional – если не хочешь пушить) #
+# Uncomment если хочешь игнорировать миграции  
+# */migrations/*
+# !*/migrations/__init__.py
