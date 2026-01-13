@@ -33,7 +33,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     tags = serializers.SerializerMethodField()
     class Meta:
         model = Article
-        fields = ['id', 'title', 'content', 'author', 'tags', 'tag_names', 'likes_count', 'dislikes_count']
+        fields = ['id', 'title', 'content', 'author', 'tags', 'tag_names', 'likes_count', 'dislikes_count', 'views_count']
 
     def get_tags(self, obj):
         return [tag.name for tag in obj.tags.all()]
@@ -48,6 +48,18 @@ class ArticleSerializer(serializers.ModelSerializer):
             article.tags.add(tag)
         
         return article 
+
+
+class ArticleDetailSerializer(serializers.ModelSerializer):
+    author = SignUpSerializer(read_only=True)
+    tag_names = serializers.ListField(child=serializers.CharField(), write_only=True)
+    tags = serializers.SerializerMethodField()
+    class Meta:
+        model = Article
+        fields = ['id', 'title', 'content', 'author', 'tags', 'tag_names', 'likes_count', 'dislikes_count', 'views_count']
+
+    def get_tags(self, obj):
+        return [tag.name for tag in obj.tags.all()]
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
@@ -68,3 +80,20 @@ class ArticleReactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArticleReaction
         fields = ['id', 'reaction', 'user']
+
+
+class FollowSerializer(serializers.Serializer):
+    following_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='following')
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'last_name', 'username', 'bio', 'avatar', 'follower_count', 'following_count', 'created_at']
+
+
+class ArticleViewSerializer(serializers.Serializer):
+    article_id = serializers.PrimaryKeyRelatedField(queryset=Article.objects.all(), source='article')
+    anonymous_id = serializers.CharField()
+
+
